@@ -1,7 +1,5 @@
 package icesi.edu.co.duckhunt.controllers;
 
-import icesi.edu.co.duckhunt.HelloApplication;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -14,7 +12,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MenuController {
-    private HelloApplication mainStage;
 
     @FXML
     private Button easy;
