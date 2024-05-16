@@ -8,7 +8,6 @@ public abstract class Duck {
     public static final int HEIGHT = 75;
     public static final int DELTA = 5;
     public static final int IMAGE_COUNT = 3;
-    public static final String BASE_PATH = "icesi/edu/co/duckhunt/images/sprites/...";
     public static final String IMAGE_EXTENSION = ".png";
     private double x;
     private double y;

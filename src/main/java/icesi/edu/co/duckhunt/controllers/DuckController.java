@@ -1,8 +1,7 @@
 package icesi.edu.co.duckhunt.controllers;
 
-import icesi.edu.co.duckhunt.model.Duck;
+import icesi.edu.co.duckhunt.model.*;
 import icesi.edu.co.duckhunt.model.moveFunctions.MoveFunction;
-import icesi.edu.co.duckhunt.model.updateView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,7 @@ public class DuckController {
         }
     }
 
-    public void generateBirds(int numb){
+    public void generateDucks(int numb){
         Random random = new Random();
         MoveFunction[] moves = new MoveFunction[]{new };
 
