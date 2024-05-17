@@ -1,5 +1,5 @@
 package icesi.edu.co.duckhunt.model;
 
-public interface updateView {
+public interface UpdateView {
     void update();
 }

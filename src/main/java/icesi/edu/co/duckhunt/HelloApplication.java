@@ -17,7 +17,7 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
 
             this.stage = stage;
-            FXMLLoader fxmlLoader = new FXMLLoader(MenuController.class.getResource("/icesi/edu/co/duckhunt/view/menu-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(MenuController.class.getResource("/icesi/edu/co/duckhunt/view/DuckHuntMenu-view.fxml"));
             Parent root = fxmlLoader.load();
 
             stage.setTitle("Duck Hunt");

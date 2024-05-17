@@ -1,6 +1,7 @@
 package icesi.edu.co.duckhunt.controllers;
 
 import icesi.edu.co.duckhunt.model.*;
+import icesi.edu.co.duckhunt.model.moveFunctions.Move;
 import icesi.edu.co.duckhunt.model.moveFunctions.MoveFunction;
 
 import java.util.ArrayList;
@@ -9,8 +10,7 @@ import java.util.Random;
 
 public class DuckController {
     private static DuckController instance;
-    private updateView updateView;
-
+    private UpdateView updateView;
     public static final int WIDTH = 1024;
     public static final int HEIGHT = 768;
     private List<Duck> ducks;
@@ -24,6 +24,7 @@ public class DuckController {
         duckAnimation.start();
     }
 
+    //Actualizar vista
     public void notifyView(){
         if(updateView != null){
             updateView.update();
@@ -32,7 +33,6 @@ public class DuckController {
 
     public void generateDucks(int numb){
         Random random = new Random();
-        MoveFunction[] moves = new MoveFunction[]{new };
 
         for(int i = 0; i < numb; i++){
             int randomNumb = random.nextInt(3);
@@ -53,6 +53,7 @@ public class DuckController {
         }
     }
 
+    //Singleton
     public static DuckController getInstance(){
         if(instance == null){
             instance = new DuckController();
@@ -60,7 +61,8 @@ public class DuckController {
         return instance;
     }
 
-    public void setUpdateView(updateView updateView){
+    //Definir el actualizador de vista.
+    public void setUpdateView(UpdateView updateView){
         this.updateView = updateView;
     }
 }
