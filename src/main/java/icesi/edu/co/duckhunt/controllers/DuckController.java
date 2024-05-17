@@ -38,15 +38,15 @@ public class DuckController {
             int randomNumb = random.nextInt(3);
             switch (randomNumb){
                 case 0:
-                    ducks.add(new BlackDuck(random.nextInt(WIDTH), random.nextInt(HEIGHT), moves[i%2]));
+                    ducks.add(new BlackDuck(random.nextInt(WIDTH), HEIGHT, speed));
                 break;
 
                 case 1:
-                    ducks.add(new BlueDuck(random.nextInt(WIDTH), random.nextInt(HEIGHT), moves[i%2]));
+                    ducks.add(new BlueDuck(random.nextInt(WIDTH), HEIGHT, speed));
                 break;
 
                 case 2:
-                    ducks.add(new BrownDuck(random.nextInt(WIDTH), random.nextInt(HEIGHT), moves[i%2]));
+                    ducks.add(new BrownDuck(random.nextInt(WIDTH), HEIGHT, speed));
                 break;
             }
 

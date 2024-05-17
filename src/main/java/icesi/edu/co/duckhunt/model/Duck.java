@@ -12,19 +12,17 @@ public abstract class Duck {
     private int imageIndex;
     private String imagePath;
 
-    public static final int DELTA = 5;
+    private int speed;
     private double x;
     private double y;
-    private double m;
-    private double b;
-    private int mode;
-    private MoveFunction moveFunction;
 
-    public Duck(int x, int y, Point2D direction){
+
+    public Duck(int x, int y, int speed){
         this.x = x;
         this.y = y;
+        this.speed = speed;
         this.imageIndex = 0;
-        this.moveFunction = moveFunction;
+
     }
 
     public void changeImage(){
