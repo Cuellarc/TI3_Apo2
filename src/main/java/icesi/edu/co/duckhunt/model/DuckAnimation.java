@@ -1,16 +1,16 @@
 package icesi.edu.co.duckhunt.model;
 
-import icesi.edu.co.duckhunt.controllers.DuckController;
+import icesi.edu.co.duckhunt.controllers.GameController;
 
 import java.util.List;
 
 public class DuckAnimation extends Thread{
     private List<Duck> ducks;
-    private DuckController duckController;
+    private GameController gameController;
 
-    public DuckAnimation(List<Duck> ducks, DuckController duckController){
+    public DuckAnimation(List<Duck> ducks, GameController gameController){
         this.ducks = ducks;
-        this.duckController = duckController;
+        this.gameController = gameController;
     }
 
     @Override
@@ -19,7 +19,7 @@ public class DuckAnimation extends Thread{
             for(int i = 0; i < ducks.size(); i++){
                 ducks.get(i).move();
             }
-            duckController.notifyView();
+            gameController.notifyView();
             try {
                 Thread.sleep(50);
             } catch (InterruptedException e){

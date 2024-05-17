@@ -1,5 +1,9 @@
 package icesi.edu.co.duckhunt.controllers;
 
+import icesi.edu.co.duckhunt.model.BlackDuck;
+import icesi.edu.co.duckhunt.model.Duck;
+import icesi.edu.co.duckhunt.view.GameView;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -19,6 +23,8 @@ public class MenuController {
     private Button medium;
     @FXML
     private Button hard;
+
+    private GameView gameView;
 
     @FXML
     public void onStartClick(ActionEvent event){
@@ -40,10 +46,18 @@ public class MenuController {
 
     @FXML
     public void onDifficultyClick(ActionEvent event){
+        gameView = new GameView();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Button pressedButton = (Button) event.getSource();
 
         if(pressedButton == easy){
+            Scene scene = new Scene(gameView.getPane(), 600, 400);
+            stage.setTitle("Duck Hunt - Easy");
+            stage.setScene(scene);
+            stage.show();
 
+            Duck.speed = 1;
+            System.out.println(BlackDuck.speed);
         }
         else if (pressedButton == medium) {
 

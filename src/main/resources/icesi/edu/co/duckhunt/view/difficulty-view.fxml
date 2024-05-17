@@ -6,17 +6,17 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="icesi.edu.co.duckhunt.controllers.MenuController">
    <children>
-      <Button layoutX="256.0" layoutY="124.0" mnemonicParsing="false" onAction="#onDifficultyClick" prefHeight="25.0" prefWidth="88.0" text="Easy">
+      <Button fx:id="easy" layoutX="256.0" layoutY="124.0" mnemonicParsing="false" onAction="#onDifficultyClick" prefHeight="25.0" prefWidth="88.0" text="Easy">
          <font>
             <Font name="JoystixMonospace-Regular" size="12.0" />
          </font>
       </Button>
-      <Button layoutX="256.0" layoutY="188.0" mnemonicParsing="false" onAction="#onDifficultyClick" prefHeight="25.0" prefWidth="88.0" text="Medium">
+      <Button fx:id="medium" layoutX="256.0" layoutY="188.0" mnemonicParsing="false" onAction="#onDifficultyClick" prefHeight="25.0" prefWidth="88.0" text="Medium">
          <font>
             <Font name="JoystixMonospace-Regular" size="12.0" />
          </font>
       </Button>
-      <Button layoutX="256.0" layoutY="256.0" mnemonicParsing="false" onAction="#onDifficultyClick" prefHeight="25.0" prefWidth="88.0" text="Hard">
+      <Button fx:id="hard" layoutX="256.0" layoutY="251.0" mnemonicParsing="false" onAction="#onDifficultyClick" prefHeight="25.0" prefWidth="88.0" text="Hard">
          <font>
             <Font name="JoystixMonospace-Regular" size="12.0" />
          </font></Button>

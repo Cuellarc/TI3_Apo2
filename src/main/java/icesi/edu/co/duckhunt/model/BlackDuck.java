@@ -1,10 +1,9 @@
 package icesi.edu.co.duckhunt.model;
 
-import icesi.edu.co.duckhunt.model.moveFunctions.MoveFunction;
-
 public class BlackDuck extends Duck{
     public static final String BASE_PATH = "icesi/edu/co/duckhunt/images/sprites/BlackDuck/blackduck";
-    public BlackDuck(int x, int y, MoveFunction moveFunction) {
-        super(x, y, moveFunction);
+
+    public BlackDuck(int x, int y) {
+        super(x, y);
     }
 }

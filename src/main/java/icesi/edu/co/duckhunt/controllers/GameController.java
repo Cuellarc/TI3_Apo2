@@ -1,22 +1,20 @@
 package icesi.edu.co.duckhunt.controllers;
 
 import icesi.edu.co.duckhunt.model.*;
-import icesi.edu.co.duckhunt.model.moveFunctions.Move;
-import icesi.edu.co.duckhunt.model.moveFunctions.MoveFunction;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class DuckController {
-    private static DuckController instance;
+public class GameController {
+    private static GameController instance;
     private UpdateView updateView;
-    public static final int WIDTH = 1024;
-    public static final int HEIGHT = 768;
-    private List<Duck> ducks;
+    public static final int WIDTH = 600;
+    public static final int HEIGHT = 400;
+    private static List<Duck> ducks;
     private DuckAnimation duckAnimation;
 
-    private DuckController(){
+    private GameController(){
         this.ducks = new ArrayList<>();
         int duckCount = 6;
         generateDucks(duckCount);
@@ -38,15 +36,15 @@ public class DuckController {
             int randomNumb = random.nextInt(3);
             switch (randomNumb){
                 case 0:
-                    ducks.add(new BlackDuck(random.nextInt(WIDTH), HEIGHT, speed));
+                    ducks.add(new BlackDuck(random.nextInt(WIDTH), HEIGHT));
                 break;
 
                 case 1:
-                    ducks.add(new BlueDuck(random.nextInt(WIDTH), HEIGHT, speed));
+                    ducks.add(new BlueDuck(random.nextInt(WIDTH), HEIGHT));
                 break;
 
                 case 2:
-                    ducks.add(new BrownDuck(random.nextInt(WIDTH), HEIGHT, speed));
+                    ducks.add(new BrownDuck(random.nextInt(WIDTH), HEIGHT));
                 break;
             }
 
@@ -54,9 +52,9 @@ public class DuckController {
     }
 
     //Singleton
-    public static DuckController getInstance(){
+    public static GameController getInstance(){
         if(instance == null){
-            instance = new DuckController();
+            instance = new GameController();
         }
         return instance;
     }
@@ -65,4 +63,10 @@ public class DuckController {
     public void setUpdateView(UpdateView updateView){
         this.updateView = updateView;
     }
+
+    public static List<Duck> getDucks() {
+        return ducks;
+    }
+
+
 }
