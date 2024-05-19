@@ -1,6 +1,5 @@
 package icesi.edu.co.duckhunt.controllers;
 
-import icesi.edu.co.duckhunt.model.BlackDuck;
 import icesi.edu.co.duckhunt.model.Duck;
 import icesi.edu.co.duckhunt.view.GameView;
 
@@ -55,9 +54,6 @@ public class MenuController {
             stage.setTitle("Duck Hunt - Easy");
             stage.setScene(scene);
             stage.show();
-
-            Duck.speed = 1;
-            System.out.println(BlackDuck.speed);
         }
         else if (pressedButton == medium) {
 

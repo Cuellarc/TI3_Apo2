@@ -15,6 +15,7 @@ public class DuckAnimation extends Thread{
 
     @Override
     public void run(){
+
         while(true){
             for(int i = 0; i < ducks.size(); i++){
                 ducks.get(i).move();

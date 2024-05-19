@@ -2,6 +2,7 @@ package icesi.edu.co.duckhunt.view;
 
 import icesi.edu.co.duckhunt.controllers.GameController;
 import icesi.edu.co.duckhunt.model.Duck;
+import icesi.edu.co.duckhunt.model.UpdateView;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,13 +13,13 @@ import javafx.application.Platform;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameView {
 
-    private GameController controller;
+public class GameView implements UpdateView {
+
+    private GameController controller = GameController.getInstance();
     private Pane pane;
 
     private List<ImageView> duckImages;
@@ -27,12 +28,12 @@ public class GameView {
         return controller;
     }
     public GameView(){
-        init();
+        initialize();
     }
-    public void init(){
+
+    public void initialize(){
         //Inicializacion de variables.
         duckImages = new ArrayList<>();
-        controller = GameController.getInstance();
         List<Duck> ducks = GameController.getDucks();
         pane = new Pane();
 
@@ -40,6 +41,19 @@ public class GameView {
         BackgroundFill backgroundFill = new BackgroundFill(Color.LIGHTBLUE, null, null);
         Background background = new Background(backgroundFill);
         pane.setBackground(background);
+
+        //Añadir patos.
+        for (int i = 0; i < ducks.size(); i++) {
+            Image duckImage = new Image(ducks.get(i).getImagePath());
+            ImageView duckView = new ImageView(duckImage);
+            duckView.setFitWidth(Duck.WIDTH);
+            duckView.setFitHeight(Duck.HEIGHT);
+            duckView.setLayoutX(ducks.get(i).getX());
+            duckView.setLayoutY(ducks.get(i).getY());
+
+            pane.getChildren().add(duckView);
+            duckImages.add(duckView);
+        }
 
         //Añadir imagen de fondo y su configuracion.
         ImageView imageView = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Background/background.png").toString()));
@@ -54,32 +68,32 @@ public class GameView {
         rectangle.setStrokeWidth(2);
         pane.getChildren().add(rectangle);
 
-        //Añadir patos (No funcional por ahora). REVISAR ANIMATION (Programa del profe) PARA AÑADIR PATOS.
-        for (int i = 0; i < ducks.size(); i++) {
-            ImageView duckImage = new ImageView(ducks.get(i).getId() + "");
-            label.setLayoutX(ducks.get(i).getX());
-            label.setLayoutY(ducks.get(i).getY());
-            labels.add(label);
-            pane.getChildren().add(label);
-        }
-
         //Permitir matar patos (No funcional por ahora).
-        for (int i = 0; i < labels.size(); i++) {
-            Label label = labels.get(i);
-            label.setOnMouseClicked(event -> {
-                Duck duck = controller.getDucks().get(labels.indexOf(label));
+        for (int i = 0; i < ducks.size(); i++) {
+            ImageView duckImage = duckImages.get(i);
+            Duck duck = ducks.get(i);
+            duckImage.setOnMouseClicked(event -> {
                 duck.kill();
             });
         }
+        controller.setUpdateView(this::updateDucks);
     }
 
-    public void updateView(){
-        Platform.runLater(() -> {
-            for (int i = 0; i < labels.size(); i++) {
-                labels.get(i).setLayoutX(controller.getDucks().get(i).getX());
-                labels.get(i).setLayoutY(controller.getDucks().get(i).getY());
-            }        });
+    public void update(){
+        Platform.runLater(this::updateDucks);
+    }
 
+    public void updateDucks(){
+        List<Duck> ducks = GameController.getDucks();
+        for(int i = 0; i < ducks.size(); i++){
+            Duck duck = ducks.get(i);
+            ImageView duckView = duckImages.get(i);
+            duckView.setLayoutX(duck.getX());
+            duckView.setLayoutY(duck.getY());
+
+            Image duckImage = new Image(duck.getImagePath());
+            duckView.setImage(duckImage);
+        }
     }
 
     public Pane getPane() {

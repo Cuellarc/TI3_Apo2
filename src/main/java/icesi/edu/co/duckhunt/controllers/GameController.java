@@ -31,20 +31,27 @@ public class GameController {
 
     public void generateDucks(int numb){
         Random random = new Random();
+        Duck newDuck;
 
         for(int i = 0; i < numb; i++){
             int randomNumb = random.nextInt(3);
             switch (randomNumb){
                 case 0:
-                    ducks.add(new BlackDuck(random.nextInt(WIDTH), HEIGHT));
+                    newDuck = new Duck(random.nextInt(WIDTH), HEIGHT-100, "blackduck");
+                    newDuck.setDirection();
+                    ducks.add(newDuck);
                 break;
 
                 case 1:
-                    ducks.add(new BlueDuck(random.nextInt(WIDTH), HEIGHT));
+                    newDuck = new Duck(random.nextInt(WIDTH), HEIGHT-100, "blueduck");
+                    newDuck.setDirection();
+                    ducks.add(newDuck);
                 break;
 
                 case 2:
-                    ducks.add(new BrownDuck(random.nextInt(WIDTH), HEIGHT));
+                    newDuck = new Duck(random.nextInt(WIDTH-20), HEIGHT-100, "brownduck");
+                    newDuck.setDirection();
+                    ducks.add(newDuck);
                 break;
             }
 
