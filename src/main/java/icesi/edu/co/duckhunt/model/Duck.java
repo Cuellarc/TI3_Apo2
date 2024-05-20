@@ -22,6 +22,7 @@ public class Duck {
     private int directionY;
     private int positionX;
     private int positionY;
+    private boolean clickable;
 
 
     public Duck(int x, int y, String color){
@@ -29,10 +30,11 @@ public class Duck {
         this.positionY = y;
         this.imageIndex = 0;
         this.colorExtension = color;
-        speed = 30;
+        speed = 5;
 
         //Inicializacion de la direccion de la imagen.
-        this.imagePath = BASE_PATH + colorExtension + "/" + colorExtension + "Right" + (imageIndex+1) + IMAGE_EXTENSION;
+        this.imagePath = BASE_PATH + colorExtension + "/" + colorExtension + "Right" + (imageIndex + 1) + IMAGE_EXTENSION;
+        System.out.println(imagePath);
     }
 
     public void changeImage(){
@@ -61,11 +63,11 @@ public class Duck {
 
     public void move(){
         changeImage();
-        if(positionX <= 0 || positionX >= GameController.WIDTH-50){
+        if(positionX <= 0 & x == -1|| positionX >= GameController.WIDTH-50 & x == 1){
             x *= -1; //Si choca con los bordes de izquierda o derecha, revertir direccion en X.
         }
 
-        if(positionY <= 0 || positionY >= GameController.HEIGHT-50){
+        if(positionY <= 0 & y == -1 || positionY >= GameController.HEIGHT-50 & y == 1){
             y *= -1; //Si choca con los bordes de arriba o abajo, revertir direccion en Y.
         }
 
@@ -88,6 +90,9 @@ public class Duck {
     }
 
     public void kill(){
-
+        if(clickable){
+            imagePath = BASE_PATH + colorExtension + "/" + colorExtension + "Death" + 1 + IMAGE_EXTENSION;
+            this.clickable = false;
+        }
     }
 }

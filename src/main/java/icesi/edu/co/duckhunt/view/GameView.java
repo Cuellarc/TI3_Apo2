@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -23,6 +24,7 @@ public class GameView implements UpdateView {
     private Pane pane;
 
     private List<ImageView> duckImages;
+    private HashMap<String, Image> imageHashMap;
 
     public GameController getController() {
         return controller;
@@ -34,6 +36,7 @@ public class GameView implements UpdateView {
     public void initialize(){
         //Inicializacion de variables.
         duckImages = new ArrayList<>();
+        imageHashMap = new HashMap<>();
         List<Duck> ducks = GameController.getDucks();
         pane = new Pane();
 
@@ -44,13 +47,23 @@ public class GameView implements UpdateView {
 
         //Añadir patos.
         for (int i = 0; i < ducks.size(); i++) {
-            Image duckImage = new Image(ducks.get(i).getImagePath());
-            ImageView duckView = new ImageView(duckImage);
+            String imagePath = ducks.get(i).getImagePath();
+            Image image = null;
+            if(!imageHashMap.containsKey(imagePath)){ //Si la imagen no esta guardada en la hash.
+                image = new Image(imagePath);
+                imageHashMap.put(imagePath, image); //Se guarda la imagen.
+            }
+            else {
+                image = imageHashMap.get(imagePath); //Si si esta, solo se carga.
+            }
+            ImageView duckView = new ImageView(image);
+            //Modificacion de imagenes:
             duckView.setFitWidth(Duck.WIDTH);
             duckView.setFitHeight(Duck.HEIGHT);
             duckView.setLayoutX(ducks.get(i).getX());
             duckView.setLayoutY(ducks.get(i).getY());
 
+            //Añadir imagen al pane.
             pane.getChildren().add(duckView);
             duckImages.add(duckView);
         }
@@ -62,11 +75,11 @@ public class GameView implements UpdateView {
         pane.getChildren().add(imageView);
 
         //Añadir rectangulos para balas, vidas y puntaje
-        Rectangle rectangle = new Rectangle(100, 360, 400, 30); // (x, y, width, height)
+        /*Rectangle rectangle = new Rectangle(100, 360, 400, 30); // (x, y, width, height)
         rectangle.setFill(Color.BLACK);
         rectangle.setStroke(Color.GREEN);
         rectangle.setStrokeWidth(2);
-        pane.getChildren().add(rectangle);
+        pane.getChildren().add(rectangle);*/
 
         //Permitir matar patos (No funcional por ahora).
         for (int i = 0; i < ducks.size(); i++) {
@@ -88,11 +101,18 @@ public class GameView implements UpdateView {
         for(int i = 0; i < ducks.size(); i++){
             Duck duck = ducks.get(i);
             ImageView duckView = duckImages.get(i);
+            String imagePath = duck.getImagePath();
+            Image image = null;
+            if(!imageHashMap.containsKey(imagePath)){
+                image = new Image(imagePath);
+                imageHashMap.put(imagePath, image);
+            }
+            else {
+                image = imageHashMap.get(imagePath);
+            }
             duckView.setLayoutX(duck.getX());
             duckView.setLayoutY(duck.getY());
-
-            Image duckImage = new Image(duck.getImagePath());
-            duckView.setImage(duckImage);
+            duckView.setImage(image);
         }
     }
 

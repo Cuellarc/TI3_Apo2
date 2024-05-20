@@ -16,7 +16,7 @@ public class GameController {
 
     private GameController(){
         this.ducks = new ArrayList<>();
-        int duckCount = 6;
+        int duckCount = 10;
         generateDucks(duckCount);
         duckAnimation = new DuckAnimation(ducks, this);
         duckAnimation.start();
