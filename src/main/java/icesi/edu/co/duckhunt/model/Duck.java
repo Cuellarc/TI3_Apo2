@@ -13,7 +13,6 @@ public class Duck {
     private String colorExtension;
     private int imageIndex;
     private String imagePath;
-    private int id;
 
     public static int speed;
     private int x;
@@ -63,18 +62,26 @@ public class Duck {
     }
 
     public void move(){
-        changeImage();
-        if(positionX <= 0 & x == -1|| positionX >= GameController.WIDTH-50 & x == 1){
-            x *= -1; //Si choca con los bordes de izquierda o derecha, revertir direccion en X.
+        if(clickable){
+            changeImage();
+            if(positionX <= 0 & x == -1|| positionX >= GameController.WIDTH-50 & x == 1){
+                x *= -1; //Si choca con los bordes de izquierda o derecha, revertir direccion en X.
+            }
+
+            if(positionY <= 0 & y == -1 || positionY >= GameController.HEIGHT-50 & y == 1){
+                y *= -1; //Si choca con los bordes de arriba o abajo, revertir direccion en Y.
+            }
+
+            if(!clickable && positionY >= GameController.HEIGHT){
+                y = 0;
+                directionY = 0;
+            }
+
+
+            positionX += (x * directionX);
+            positionY += (y * directionY);
         }
 
-        if(positionY <= 0 & y == -1 || positionY >= GameController.HEIGHT-50 & y == 1){
-            y *= -1; //Si choca con los bordes de arriba o abajo, revertir direccion en Y.
-        }
-
-
-        positionX += (x * directionX);
-        positionY += (y * directionY);
 
     }
 
@@ -90,14 +97,26 @@ public class Duck {
         return imagePath;
     }
 
-    public void kill(){
+    public void kill() {
         if(clickable){
+            imagePath = BASE_PATH + colorExtension + "/" + colorExtension + "Death" + 1 + IMAGE_EXTENSION;
+            this.clickable = false;
             x = 0;
             y = 0;
             directionX = 0;
             directionY = 0;
-            imagePath = BASE_PATH + colorExtension + "/" + colorExtension + "Death" + 1 + IMAGE_EXTENSION;
-            this.clickable = false;
+
+            //killMove();
         }
+    }
+
+    public void killMove(){
+        imagePath = BASE_PATH + colorExtension + "/" + colorExtension + "Death" + 2 + IMAGE_EXTENSION;
+
+        positionY += 10;
+    }
+
+    public boolean isClickable() {
+        return clickable;
     }
 }
