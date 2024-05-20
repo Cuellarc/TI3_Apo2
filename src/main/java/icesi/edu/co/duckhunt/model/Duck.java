@@ -30,6 +30,7 @@ public class Duck {
         this.positionY = y;
         this.imageIndex = 0;
         this.colorExtension = color;
+        this.clickable = true;
         speed = 5;
 
         //Inicializacion de la direccion de la imagen.
@@ -91,6 +92,10 @@ public class Duck {
 
     public void kill(){
         if(clickable){
+            x = 0;
+            y = 0;
+            directionX = 0;
+            directionY = 0;
             imagePath = BASE_PATH + colorExtension + "/" + colorExtension + "Death" + 1 + IMAGE_EXTENSION;
             this.clickable = false;
         }
