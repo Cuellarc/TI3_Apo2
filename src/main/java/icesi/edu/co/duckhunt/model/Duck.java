@@ -73,7 +73,9 @@ public class Duck {
             }
 
             if(!clickable && positionY >= GameController.HEIGHT){
+                x = 0;
                 y = 0;
+                directionX = 0;
                 directionY = 0;
             }
 
@@ -111,9 +113,11 @@ public class Duck {
     }
 
     public void killMove(){
-        imagePath = BASE_PATH + colorExtension + "/" + colorExtension + "Death" + 2 + IMAGE_EXTENSION;
+        if(positionY <= GameController.HEIGHT-50){
+            imagePath = BASE_PATH + colorExtension + "/" + colorExtension + "Death" + 2 + IMAGE_EXTENSION;
 
-        positionY += 10;
+            positionY += 10;
+        }
     }
 
     public boolean isClickable() {

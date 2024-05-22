@@ -16,8 +16,7 @@ public class GameController {
 
     private GameController(){
         this.ducks = new ArrayList<>();
-        int duckCount = 10;
-        generateDucks(duckCount);
+        generateDucks();
         duckAnimation = new DuckAnimation(ducks, this);
         duckAnimation.start();
     }
@@ -29,33 +28,17 @@ public class GameController {
         }
     }
 
-    public void generateDucks(int numb){
+    public void generateDucks(){
         Random random = new Random();
-        Duck newDuck;
 
-        for(int i = 0; i < numb; i++){
-            int randomNumb = random.nextInt(3);
-            switch (randomNumb){
-                case 0:
-                    newDuck = new Duck(random.nextInt(WIDTH), HEIGHT-100, "blackduck");
-                    newDuck.setDirection();
-                    ducks.add(newDuck);
-                break;
+        ducks.add(new Duck(random.nextInt(WIDTH), HEIGHT-100, "blackduck"));
+        ducks.get(0).setDirection();
 
-                case 1:
-                    newDuck = new Duck(random.nextInt(WIDTH), HEIGHT-100, "blueduck");
-                    newDuck.setDirection();
-                    ducks.add(newDuck);
-                break;
+        ducks.add(new Duck(random.nextInt(WIDTH), HEIGHT-100, "blueduck"));
+        ducks.get(1).setDirection();
 
-                case 2:
-                    newDuck = new Duck(random.nextInt(WIDTH-20), HEIGHT-100, "brownduck");
-                    newDuck.setDirection();
-                    ducks.add(newDuck);
-                break;
-            }
-
-        }
+        ducks.add(new Duck(random.nextInt(WIDTH-20), HEIGHT-100, "brownduck"));
+        ducks.get(2).setDirection();
     }
 
     //Singleton
