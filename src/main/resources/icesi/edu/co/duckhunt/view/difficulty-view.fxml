@@ -1,24 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="icesi.edu.co.duckhunt.controllers.MenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="398.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="icesi.edu.co.duckhunt.controllers.MenuController">
    <children>
-      <Button fx:id="easy" layoutX="256.0" layoutY="124.0" mnemonicParsing="false" onAction="#onDifficultyClick" prefHeight="25.0" prefWidth="88.0" text="Easy">
+      <ImageView fitHeight="416.0" fitWidth="600.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/menuImage/493-4933250_duck-hunt-duck-png-duck-hunt-dog-clipart.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="141.0" fitWidth="241.0" focusTraversable="true" layoutX="189.0" layoutY="14.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Duck_hunt_image_No_Back.png" />
+         </image>
+         <effect>
+            <Blend mode="HARD_LIGHT" />
+         </effect>
+      </ImageView>
+      <Button fx:id="easy" layoutX="194.0" layoutY="132.0" mnemonicParsing="false" onAction="#onDifficultyClick" prefHeight="26.0" prefWidth="230.0" style="-fx-border-color: blue; -fx-background-color: orange;" text="Mode A                                     Easy" textOverrun="CLIP">
          <font>
-            <Font name="JoystixMonospace-Regular" size="12.0" />
+            <Font name="Bauhaus 93" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="medium" layoutX="256.0" layoutY="188.0" mnemonicParsing="false" onAction="#onDifficultyClick" prefHeight="25.0" prefWidth="88.0" text="Medium">
+      <Button fx:id="medium" layoutX="195.0" layoutY="169.0" mnemonicParsing="false" onAction="#onDifficultyClick" prefHeight="26.0" prefWidth="229.0" style="-fx-background-color: orange; -fx-border-color: blue;" text="  Mode B                                 Medium">
          <font>
-            <Font name="JoystixMonospace-Regular" size="12.0" />
+            <Font name="Bauhaus 93" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="hard" layoutX="256.0" layoutY="251.0" mnemonicParsing="false" onAction="#onDifficultyClick" prefHeight="25.0" prefWidth="88.0" text="Hard">
+      <Button fx:id="hard" layoutX="194.0" layoutY="205.0" mnemonicParsing="false" onAction="#onDifficultyClick" prefHeight="26.0" prefWidth="230.0" style="-fx-background-color: orange; -fx-border-color: blue;" text="Mode C                                    Hard">
          <font>
-            <Font name="JoystixMonospace-Regular" size="12.0" />
+            <Font name="Bauhaus 93" size="13.0" />
          </font></Button>
    </children>
 </AnchorPane>
