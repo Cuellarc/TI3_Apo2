@@ -75,10 +75,10 @@ public class GameView implements UpdateView {
         }
 
         //Añadir imagen de fondo y su configuracion.
-        ImageView imageView = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Background/background.png").toString()));
+        /*ImageView imageView = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Background/background.png").toString()));
         imageView.setFitWidth(600);
         imageView.setFitHeight(400);
-        pane.getChildren().add(imageView);
+        pane.getChildren().add(imageView);*/
 
         //Añadir rectangulos para balas, vidas y puntaje
         /*Rectangle rectangle = new Rectangle(100, 360, 400, 30); // (x, y, width, height)
@@ -102,12 +102,15 @@ public class GameView implements UpdateView {
         Platform.runLater(this::updateDucks);
     }
 
+    //Actualizar patos (Activar Runnable).
     public void updateDucks(){
         List<Duck> ducks = GameController.getDucks();
-        for(int i = 0; i < ducks.size(); i++){
-            Duck duck = ducks.get(i);
-            ImageView duckView = duckImages.get(i);
-            String imagePath = duck.getImagePath();
+        //for(int i = 0; i < ducks.size(); i++){
+
+            Duck duck = controller.getActualDuck();
+            ImageView duckView = duckImages.get(controller.getActualDuckIndex());
+            String imagePath = controller.getActualDuck().getImagePath();
+
             Image image = null;
             if(!imageHashMap.containsKey(imagePath)){
                 image = new Image(imagePath);
@@ -119,7 +122,7 @@ public class GameView implements UpdateView {
             duckView.setLayoutX(duck.getX());
             duckView.setLayoutY(duck.getY());
             duckView.setImage(image);
-        }
+        //}
     }
 
     public Pane getPane() {

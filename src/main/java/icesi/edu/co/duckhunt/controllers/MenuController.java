@@ -1,6 +1,5 @@
 package icesi.edu.co.duckhunt.controllers;
 
-import icesi.edu.co.duckhunt.model.Duck;
 import icesi.edu.co.duckhunt.view.GameView;
 
 import javafx.fxml.FXML;
