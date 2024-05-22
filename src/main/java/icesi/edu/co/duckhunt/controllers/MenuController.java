@@ -25,6 +25,8 @@ public class MenuController {
 
     private GameView gameView;
 
+
+
     @FXML
     public void onStartClick(ActionEvent event){
         FXMLLoader fxmlLoader = new FXMLLoader(MenuController.class.getResource("/icesi/edu/co/duckhunt/view/difficulty-view.fxml"));

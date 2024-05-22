@@ -1,6 +1,8 @@
 package icesi.edu.co.duckhunt.controllers;
 
 import icesi.edu.co.duckhunt.model.*;
+import icesi.edu.co.duckhunt.view.GameView;
+import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,7 @@ public class GameController {
     public static final int HEIGHT = 400;
     private static List<Duck> ducks;
     private DuckAnimation duckAnimation;
+
 
     private GameController(){
         this.ducks = new ArrayList<>();
@@ -39,6 +42,7 @@ public class GameController {
 
         ducks.add(new Duck(random.nextInt(WIDTH-20), HEIGHT-100, "brownduck"));
         ducks.get(2).setDirection();
+
     }
 
     //Singleton

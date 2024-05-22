@@ -4,6 +4,8 @@ import icesi.edu.co.duckhunt.controllers.GameController;
 import icesi.edu.co.duckhunt.model.Duck;
 import icesi.edu.co.duckhunt.model.UpdateView;
 
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -26,6 +28,8 @@ public class GameView implements UpdateView {
     private List<ImageView> duckImages;
     private HashMap<String, Image> imageHashMap;
 
+    private Image cursorImage;
+
     public GameController getController() {
         return controller;
     }
@@ -39,6 +43,8 @@ public class GameView implements UpdateView {
         imageHashMap = new HashMap<>();
         List<Duck> ducks = GameController.getDucks();
         pane = new Pane();
+        cursorImage= new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/objetivo.png").toString());
+        pane.setCursor(new ImageCursor(cursorImage));
 
         //Fondo y color.
         BackgroundFill backgroundFill = new BackgroundFill(Color.LIGHTBLUE, null, null);
