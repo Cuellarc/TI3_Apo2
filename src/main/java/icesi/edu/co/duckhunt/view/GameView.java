@@ -73,15 +73,15 @@ public class GameView implements UpdateView {
         }
 
         //Añadir imagen de fondo y su configuracion.
-        /*ImageView imageView = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Background/background.png").toString()));
+        ImageView imageView = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Background/background.png").toString()));
         imageView.setFitWidth(600);
         imageView.setFitHeight(400);
-        pane.getChildren().add(imageView);*/
+        pane.getChildren().add(imageView);
 
-        /*ImageView imagBulet = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Bulet/WhatsApp Image 2024-05-15 at 09.19.00_cbb595db (1).jpg").toString()));
-        imageView.setFitWidth(20);
-        imageView.setFitHeight(30);
-        pane.getChildren().add(imagBulet);*/
+        ImageView imagBulet = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Bulet/WhatsApp Image 2024-05-15 at 09.19.00_cbb595db (1).jpg").toString()));
+        imagBulet.setFitWidth(20);
+        imagBulet.setFitHeight(30);
+        pane.getChildren().add(imagBulet);
 
         //Añadir rectangulos para balas, vidas y puntaje
         Rectangle rectangle = new Rectangle(125, 360, 400, 30); // (x, y, width, height)
