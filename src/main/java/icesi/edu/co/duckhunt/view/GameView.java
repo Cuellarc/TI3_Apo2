@@ -4,7 +4,6 @@ import icesi.edu.co.duckhunt.controllers.GameController;
 import icesi.edu.co.duckhunt.model.Duck;
 import icesi.edu.co.duckhunt.model.UpdateView;
 
-import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,7 +23,6 @@ public class GameView implements UpdateView {
 
     private GameController controller = GameController.getInstance();
     private Pane pane;
-
     private List<ImageView> duckImages;
     private HashMap<String, Image> imageHashMap;
 
@@ -80,12 +78,23 @@ public class GameView implements UpdateView {
         imageView.setFitHeight(400);
         pane.getChildren().add(imageView);
 
+        /*ImageView imagBulet = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Bulet/WhatsApp Image 2024-05-15 at 09.19.00_cbb595db (1).jpg").toString()));
+        imageView.setFitWidth(20);
+        imageView.setFitHeight(30);
+        pane.getChildren().add(imagBulet);*/
+
         //Añadir rectangulos para balas, vidas y puntaje
-        /*Rectangle rectangle = new Rectangle(100, 360, 400, 30); // (x, y, width, height)
+        Rectangle rectangle = new Rectangle(125, 360, 400, 30); // (x, y, width, height)
         rectangle.setFill(Color.BLACK);
         rectangle.setStroke(Color.GREEN);
         rectangle.setStrokeWidth(2);
-        pane.getChildren().add(rectangle);*/
+        pane.getChildren().add(rectangle);
+
+        Rectangle rectangleBults = new Rectangle(15, 360, 60, 30); // (x, y, width, height)
+        rectangleBults.setFill(Color.BLACK);
+        rectangleBults.setStroke(Color.GREEN);
+        rectangleBults.setStrokeWidth(2);
+        pane.getChildren().add(rectangleBults);
 
         //Permitir matar patos (No funcional por ahora).
         for (int i = 0; i < ducks.size(); i++) {
