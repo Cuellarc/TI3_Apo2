@@ -14,6 +14,8 @@ public class GameController {
     public static final int WIDTH = 600;
     public static final int HEIGHT = 400;
     private static List<Duck> ducks;
+    private static Duck actualDuck;
+    private static int actualDuckIndex;
     private DuckAnimation duckAnimation;
 
 
@@ -31,6 +33,7 @@ public class GameController {
         }
     }
 
+    //Generar 3 patos, uno de cada color en posicion X random, y posicion Y abajo detras del pasto.
     public void generateDucks(){
         Random random = new Random();
 
@@ -43,6 +46,7 @@ public class GameController {
         ducks.add(new Duck(random.nextInt(WIDTH-20), HEIGHT-100, "brownduck"));
         ducks.get(2).setDirection();
 
+        actualDuck = ducks.get(random.nextInt(3));
     }
 
     //Singleton
@@ -58,9 +62,23 @@ public class GameController {
         this.updateView = updateView;
     }
 
+    //Enviar la lista de patos creados.
     public static List<Duck> getDucks() {
         return ducks;
     }
 
+    public static void setActualDuck(){
+        Random random = new Random();
+        int numb = random.nextInt(3);
+        actualDuck = ducks.get(numb);
+        actualDuckIndex = numb;
+    }
 
+    public Duck getActualDuck() {
+        return actualDuck;
+    }
+
+    public int getActualDuckIndex() {
+        return actualDuckIndex;
+    }
 }
