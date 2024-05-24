@@ -24,21 +24,22 @@ public class DuckAnimation extends Thread{
 
     @Override
     public void run(){
-
-        while(true){
-            //for(int i = 0; i < ducks.size(); i++){
-            actualDuck.move();
-                if(!actualDuck.isClickable()){
-                    //int finalI = i;
-                    scheduler.schedule(() -> actualDuck.killMove(), 1, TimeUnit.SECONDS);
+        try {
+            while(true){
+            ducks.get(gameController.getActualDuckIndex()).move();
+            if(!ducks.get(gameController.getActualDuckIndex()).isClickable()){
+                gameController.notifyView();
+                Thread.sleep(1000);
+                while (ducks.get(gameController.getActualDuckIndex()).killMove()){
+                    Thread.sleep(60);
+                    gameController.notifyView();
                 }
-            //}
-            gameController.notifyView();
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e){
-                e.printStackTrace();
             }
+            gameController.notifyView();
+                Thread.sleep(50);
+            }
+        } catch (InterruptedException e){
+            e.printStackTrace();
         }
     }
 

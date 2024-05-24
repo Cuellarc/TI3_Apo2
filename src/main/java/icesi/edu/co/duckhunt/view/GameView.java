@@ -26,6 +26,7 @@ public class GameView implements UpdateView {
     private Pane pane;
 
     private List<ImageView> duckImages;
+    private List<Pane> duckImagesPanes;
     private HashMap<String, Image> imageHashMap;
 
     private Image cursorImage;
@@ -41,6 +42,7 @@ public class GameView implements UpdateView {
         //Inicializacion de variables.
         duckImages = new ArrayList<>();
         imageHashMap = new HashMap<>();
+        duckImagesPanes = new ArrayList<>();
         List<Duck> ducks = GameController.getDucks();
         pane = new Pane();
         cursorImage= new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/objetivo.png").toString());
@@ -66,19 +68,28 @@ public class GameView implements UpdateView {
             //Modificacion de imagenes:
             duckView.setFitWidth(Duck.WIDTH);
             duckView.setFitHeight(Duck.HEIGHT);
-            duckView.setLayoutX(ducks.get(i).getX());
-            duckView.setLayoutY(ducks.get(i).getY());
+
+            Pane duckPane = new Pane();
+            duckPane.setLayoutX(ducks.get(i).getX());
+            duckPane.setLayoutY(ducks.get(i).getY());
+            duckPane.setPrefSize(Duck.WIDTH+10,Duck.HEIGHT+10);
+
+            BackgroundFill paneFill = new BackgroundFill(Color.TRANSPARENT, null, null);
+            Background paneBg = new Background(paneFill);
+            duckPane.setBackground(paneBg);
 
             //Añadir imagen al pane.
-            pane.getChildren().add(duckView);
+            duckPane.getChildren().add(duckView);
+            pane.getChildren().add(duckPane);
+            duckImagesPanes.add(duckPane);
             duckImages.add(duckView);
         }
 
         //Añadir imagen de fondo y su configuracion.
-        /*ImageView imageView = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Background/background.png").toString()));
+        ImageView imageView = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Background/background.png").toString()));
         imageView.setFitWidth(600);
         imageView.setFitHeight(400);
-        pane.getChildren().add(imageView);*/
+        pane.getChildren().add(imageView);
 
         //Añadir rectangulos para balas, vidas y puntaje
         /*Rectangle rectangle = new Rectangle(100, 360, 400, 30); // (x, y, width, height)
@@ -87,11 +98,11 @@ public class GameView implements UpdateView {
         rectangle.setStrokeWidth(2);
         pane.getChildren().add(rectangle);*/
 
-        //Permitir matar patos (No funcional por ahora).
+        //Permitir matar patos.
         for (int i = 0; i < ducks.size(); i++) {
-            ImageView duckImage = duckImages.get(i);
+            Pane paneOfDuck = duckImagesPanes.get(i);
             Duck duck = ducks.get(i);
-            duckImage.setOnMouseClicked(event -> {
+            paneOfDuck.setOnMouseClicked(event -> {
                 duck.kill();
             });
         }
@@ -105,24 +116,27 @@ public class GameView implements UpdateView {
     //Actualizar patos (Activar Runnable).
     public void updateDucks(){
         List<Duck> ducks = GameController.getDucks();
-        //for(int i = 0; i < ducks.size(); i++){
 
-            Duck duck = controller.getActualDuck();
-            ImageView duckView = duckImages.get(controller.getActualDuckIndex());
-            String imagePath = controller.getActualDuck().getImagePath();
+        Duck duck = ducks.get(controller.getActualDuckIndex());
+        if(duck.isClickable() && duck.isDead()){
+            duck.setDirection();
+            duck.setDead(false);
+        }
+        Pane duckPane = duckImagesPanes.get(controller.getActualDuckIndex());
+        ImageView duckView = duckImages.get(controller.getActualDuckIndex());
+        String imagePath = duck.getImagePath();
 
-            Image image = null;
-            if(!imageHashMap.containsKey(imagePath)){
-                image = new Image(imagePath);
-                imageHashMap.put(imagePath, image);
-            }
-            else {
-                image = imageHashMap.get(imagePath);
-            }
-            duckView.setLayoutX(duck.getX());
-            duckView.setLayoutY(duck.getY());
-            duckView.setImage(image);
-        //}
+        Image image = null;
+        if(!imageHashMap.containsKey(imagePath)){
+            image = new Image(imagePath);
+            imageHashMap.put(imagePath, image);
+        }
+        else {
+            image = imageHashMap.get(imagePath);
+        }
+        duckPane.setLayoutX(duck.getX());
+        duckPane.setLayoutY(duck.getY());
+        duckView.setImage(image);
     }
 
     public Pane getPane() {

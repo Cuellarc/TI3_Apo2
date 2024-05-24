@@ -22,6 +22,7 @@ public class Duck {
     private int positionX;
     private int positionY;
     private boolean clickable;
+    private boolean dead;
     private GameController controller;
 
 
@@ -31,7 +32,7 @@ public class Duck {
         this.imageIndex = 0;
         this.colorExtension = color;
         this.clickable = true;
-        speed = 5;
+        speed = 1;
 
         //Inicializacion de la direccion de la imagen.
         this.imagePath = BASE_PATH + colorExtension + "/" + colorExtension + "Right" + (imageIndex + 1) + IMAGE_EXTENSION;
@@ -59,9 +60,9 @@ public class Duck {
     public void setDirection(){
         Random random = new Random();
         x = random.nextBoolean() ? 1 : -1; //En X, positivo = derecha, negativo = izquierda.
-        y = 1;
-        directionX = random.nextInt((speed - 5) + 1) + 5;
-        directionY = random.nextInt((speed - 5) + 1) + 5;
+        y = -1;                            //Y en negativo para que el pato inicie volando hacia arriba.
+        directionX = random.nextInt(speed) + 5;
+        directionY = random.nextInt(speed) + 5;
     }
 
 
@@ -80,9 +81,6 @@ public class Duck {
             positionX += (x * directionX);
             positionY += (y * directionY);
         }
-
-        
-
     }
 
     //Recibir la posicion en X.
@@ -103,8 +101,8 @@ public class Duck {
     //Matar al pato y sumar punto.
     public void kill() {
         if(clickable){
-            imagePath = BASE_PATH + colorExtension + "/" + colorExtension + "Death" + 1 + IMAGE_EXTENSION;
             this.clickable = false;
+            imagePath = BASE_PATH + colorExtension + "/" + colorExtension + "Death" + 1 + IMAGE_EXTENSION;
             x = 0;
             y = 0;
             directionX = 0;
@@ -114,19 +112,31 @@ public class Duck {
     }
 
     //Movimiento del pato tras morir.
-    public void killMove(){
+    public boolean killMove(){
         if(positionY <= GameController.HEIGHT-50){
             imagePath = BASE_PATH + colorExtension + "/" + colorExtension + "Death" + 2 + IMAGE_EXTENSION;
 
             positionY += 10;
+            return true;
         }
         else {
             GameController.setActualDuck();
+            this.clickable = true;
+            this.dead = false;
+            setDirection();
+            return false;
         }
     }
 
-    //Definir si es clickeable o no (Para no poder matarlo mas de una vez al mismo pato).
     public boolean isClickable() {
         return clickable;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
+    }
+
+    public boolean isDead() {
+        return dead;
     }
 }

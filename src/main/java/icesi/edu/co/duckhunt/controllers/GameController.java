@@ -43,10 +43,10 @@ public class GameController {
         ducks.add(new Duck(random.nextInt(WIDTH), HEIGHT-100, "blueduck"));
         ducks.get(1).setDirection();
 
-        ducks.add(new Duck(random.nextInt(WIDTH-20), HEIGHT-100, "brownduck"));
+        ducks.add(new Duck(random.nextInt(WIDTH), HEIGHT-100, "brownduck"));
         ducks.get(2).setDirection();
 
-        actualDuck = ducks.get(random.nextInt(3));
+        setActualDuck();
     }
 
     //Singleton
@@ -70,7 +70,6 @@ public class GameController {
     public static void setActualDuck(){
         Random random = new Random();
         int numb = random.nextInt(3);
-        actualDuck = ducks.get(numb);
         actualDuckIndex = numb;
     }
 
