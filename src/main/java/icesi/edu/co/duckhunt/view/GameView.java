@@ -4,7 +4,6 @@ import icesi.edu.co.duckhunt.controllers.GameController;
 import icesi.edu.co.duckhunt.model.Duck;
 import icesi.edu.co.duckhunt.model.UpdateView;
 
-import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,7 +23,6 @@ public class GameView implements UpdateView {
 
     private GameController controller = GameController.getInstance();
     private Pane pane;
-
     private List<ImageView> duckImages;
     private List<Pane> duckImagesPanes;
     private HashMap<String, Image> imageHashMap;
@@ -92,11 +90,41 @@ public class GameView implements UpdateView {
         pane.getChildren().add(imageView);
 
         //Añadir rectangulos para balas, vidas y puntaje
-        /*Rectangle rectangle = new Rectangle(100, 360, 400, 30); // (x, y, width, height)
+        Rectangle rectangle = new Rectangle(125, 360, 400, 30); // (x, y, width, height)
         rectangle.setFill(Color.BLACK);
         rectangle.setStroke(Color.GREEN);
         rectangle.setStrokeWidth(2);
-        pane.getChildren().add(rectangle);*/
+        pane.getChildren().add(rectangle);
+
+        Rectangle rectangleBults = new Rectangle(15, 360, 60, 30); // (x, y, width, height)
+        rectangleBults.setFill(Color.BLACK);
+        rectangleBults.setStroke(Color.GREEN);
+        rectangleBults.setStrokeWidth(2);
+        pane.getChildren().add(rectangleBults);
+
+        ImageView imagBulet1 = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Bulet/WhatsApp Image 2024-05-15 at 09.19.00_cbb595db (1).jpg").toString()));
+        ImageView imagBulet2 = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Bulet/WhatsApp Image 2024-05-15 at 09.19.00_cbb595db (1).jpg").toString()));
+
+        // Ajustar dimensiones de las balas
+        imagBulet1.setFitWidth(10);
+        imagBulet1.setFitHeight(15);
+        imagBulet2.setFitWidth(10);
+        imagBulet2.setFitHeight(15);
+
+        // Posicionar la primera bala dentro del rectángulo
+        double rectX = rectangleBults.localToScene(rectangleBults.getBoundsInLocal()).getMinX();
+        double rectY = rectangleBults.localToScene(rectangleBults.getBoundsInLocal()).getMinY();
+
+        imagBulet1.setLayoutX(rectX + (rectangleBults.getWidth() - imagBulet1.getFitWidth()) / 2);
+        imagBulet1.setLayoutY(rectY + (rectangleBults.getHeight() - imagBulet1.getFitHeight()) / 2);
+
+        // Posicionar la segunda bala al lado de la primera bala
+        double spacing = 10; // Espacio entre las balas
+        imagBulet2.setLayoutX(imagBulet1.getLayoutX() + imagBulet1.getFitWidth() + spacing);
+        imagBulet2.setLayoutY(rectY + (rectangleBults.getHeight() - imagBulet2.getFitHeight()) / 2);
+
+        pane.getChildren().add(imagBulet1);
+        pane.getChildren().add(imagBulet2);
 
         //Permitir matar patos.
         for (int i = 0; i < ducks.size(); i++) {
