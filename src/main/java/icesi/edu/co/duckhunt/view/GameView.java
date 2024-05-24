@@ -102,6 +102,7 @@ public class GameView implements UpdateView {
         rectangleBults.setStrokeWidth(2);
         pane.getChildren().add(rectangleBults);
 
+        //Añadir balas.
         ImageView imagBulet1 = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Bulet/WhatsApp Image 2024-05-15 at 09.19.00_cbb595db (1).jpg").toString()));
         ImageView imagBulet2 = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Bulet/WhatsApp Image 2024-05-15 at 09.19.00_cbb595db (1).jpg").toString()));
 
