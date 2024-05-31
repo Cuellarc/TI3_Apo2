@@ -5,10 +5,10 @@ public class Player {
     private int points;
     private int bullets;
 
-    public Player(){
+    public Player() {
         this.life = 3;
         this.points = 0;
-        this.bullets = 5;
+        this.bullets = 3;
     }
 
     // Método para simular disparo a un objetivo
@@ -18,9 +18,8 @@ public class Player {
                 // Si acierta, no se consumen balas y se suman 50 puntos
                 points += 50;
             } else {
-                // Si falla, se consume una bala y se pierde una vida
+                // Si falla, se consume una bala
                 bullets--;
-                life--;
             }
         } else {
             System.out.println("No tienes más balas.");
@@ -31,6 +30,17 @@ public class Player {
             System.out.println("Has perdido todas tus vidas.");
         }
     }
+
+    // Método para simular disparo fallido
+    public void dispararFallido() {
+        if (bullets > 0) {
+            // Si falla, se consume una bala
+            bullets--;
+        } else {
+            System.out.println("No tienes más balas.");
+        }
+    }
+
 
     public int getLife() {
         return life;
