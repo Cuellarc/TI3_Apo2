@@ -41,7 +41,7 @@ public class GameView implements UpdateView {
     }
 
     public void initialize() {
-        //Inicializacion de variables.
+        // Inicialización de variables.
         duckImages = new ArrayList<>();
         imageHashMap = new HashMap<>();
         duckImagesPanes = new ArrayList<>();
@@ -51,67 +51,53 @@ public class GameView implements UpdateView {
         cursorImage = new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/objetivo.png").toString());
         pane.setCursor(new ImageCursor(cursorImage));
 
-        //Fondo y color.
+        // Fondo y color.
         BackgroundFill backgroundFill = new BackgroundFill(Color.LIGHTBLUE, null, null);
         Background background = new Background(backgroundFill);
         pane.setBackground(background);
 
+        // Permitir matar patos.
+        for (int i = 0; i < ducks.size(); i++) {
+            Pane paneOfDuck = new Pane();
+            Duck duck = ducks.get(i);
+            ImageView duckView = new ImageView(duck.getImagePath());
+            duckView.setFitWidth(Duck.WIDTH);
+            duckView.setFitHeight(Duck.HEIGHT);
+            paneOfDuck.getChildren().add(duckView);
+            duckImagesPanes.add(paneOfDuck);
+            duckImages.add(duckView);
+            paneOfDuck.setOnMouseClicked(event -> {
+                if (duck.isClickable()) {
+                    duck.kill();
+                    player.disparar(true); // Consumir una bala si acierta
+                    updateBullets(player.getBullets()); // Actualizar la vista del contador de balas
+                }
+            });
+            pane.getChildren().add(paneOfDuck);
+        }
+
+        // Permitir disparar fuera de los patos.
         pane.setOnMouseClicked(event -> {
             boolean clickOnDuck = false;
-            // Verificar si se hizo clic en algún pato
             for (Pane duckPane : duckImagesPanes) {
                 if (duckPane.getBoundsInParent().contains(event.getX(), event.getY())) {
                     clickOnDuck = true;
                     break;
                 }
             }
-            // Si no se hizo clic en un pato, restar una bala al jugador
             if (!clickOnDuck) {
-                player.disparar(false);
-                updateBullets(player.getBullets());
+                player.disparar(false); // Consumir una bala si falla
+                updateBullets(player.getBullets()); // Actualizar la vista del contador de balas
             }
         });
 
-    //Añadir patos.
-        for (int i = 0; i < ducks.size(); i++) {
-            String imagePath = ducks.get(i).getImagePath();
-            Image image = null;
-            if(!imageHashMap.containsKey(imagePath)){ //Si la imagen no esta guardada en la hash.
-                image = new Image(imagePath);
-                imageHashMap.put(imagePath, image); //Se guarda la imagen.
-            }
-            else {
-                image = imageHashMap.get(imagePath); //Si si esta, solo se carga.
-            }
-            ImageView duckView = new ImageView(image);
-            //Modificacion de imagenes:
-            duckView.setFitWidth(Duck.WIDTH);
-            duckView.setFitHeight(Duck.HEIGHT);
-
-            Pane duckPane = new Pane();
-            duckPane.setLayoutX(ducks.get(i).getX());
-            duckPane.setLayoutY(ducks.get(i).getY());
-            duckPane.setPrefSize(Duck.WIDTH+10,Duck.HEIGHT+10);
-
-            BackgroundFill paneFill = new BackgroundFill(Color.TRANSPARENT, null, null);
-            Background paneBg = new Background(paneFill);
-            duckPane.setBackground(paneBg);
-
-
-            //Añadir imagen al pane.
-            duckPane.getChildren().add(duckView);
-            pane.getChildren().add(duckPane);
-            duckImagesPanes.add(duckPane);
-            duckImages.add(duckView);
-        }
-
-        //Añadir imagen de fondo y su configuracion.
+        // Añadir imagen de fondo y su configuración.
         ImageView imageView = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Background/background.png").toString()));
         imageView.setFitWidth(600);
         imageView.setFitHeight(400);
         pane.getChildren().add(imageView);
 
-        //Añadir rectangulos para balas, vidas y puntaje
+        // Añadir rectángulos para balas, vidas y puntaje.
         Rectangle rectangle = new Rectangle(125, 360, 400, 30); // (x, y, width, height)
         rectangle.setFill(Color.BLACK);
         rectangle.setStroke(Color.GREEN);
@@ -124,7 +110,7 @@ public class GameView implements UpdateView {
         rectangleBults.setStrokeWidth(2);
         pane.getChildren().add(rectangleBults);
 
-        //Añadir balas.
+        // Añadir balas.
         ImageView imagBulet1 = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Bulet/WhatsApp Image 2024-05-15 at 09.19.00_cbb595db (1).jpg").toString()));
         ImageView imagBulet2 = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Bulet/WhatsApp Image 2024-05-15 at 09.19.00_cbb595db (1).jpg").toString()));
         ImageView imagBulet3 = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Bulet/WhatsApp Image 2024-05-15 at 09.19.00_cbb595db (1).jpg").toString()));
@@ -158,20 +144,10 @@ public class GameView implements UpdateView {
         pane.getChildren().add(imagBulet2);
         pane.getChildren().add(imagBulet3);
 
-
-
-        //Permitir matar patos.
-        for (int i = 0; i < ducks.size(); i++) {
-            Pane paneOfDuck = duckImagesPanes.get(i);
-            Duck duck = ducks.get(i);
-            paneOfDuck.setOnMouseClicked(event -> {
-                duck.kill();
-            });
-        }
         controller.setUpdateView(this::updateDucks);
     }
 
-    public void update(){
+    public void update() {
         Platform.runLater(this::updateDucks);
     }
 
@@ -187,7 +163,7 @@ public class GameView implements UpdateView {
         }
     }
 
-    //Actualizar patos (Activar Runnable).
+    // Actualizar patos (Activar Runnable).
     public void updateDucks() {
         List<Duck> ducks = GameController.getDucks();
 
@@ -217,16 +193,7 @@ public class GameView implements UpdateView {
                 duck.kill();
             }
         });
-
-        // Verificar si se hizo clic fuera de un pato (fallo)
-        pane.setOnMouseClicked(event -> {
-            if (!duck.isClickable()) {
-                player.dispararFallido(); // Consumir una bala si falla
-                updateBullets(player.getBullets()); // Actualizar la vista del contador de balas
-            }
-        });
     }
-
 
     public Pane getPane() {
         return pane;

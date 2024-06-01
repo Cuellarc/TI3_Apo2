@@ -1,9 +1,6 @@
 package icesi.edu.co.duckhunt.controllers;
 
 import icesi.edu.co.duckhunt.model.*;
-import icesi.edu.co.duckhunt.view.GameView;
-import javafx.scene.image.Image;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -18,8 +15,10 @@ public class GameController {
     private static int actualDuckIndex;
     private DuckAnimation duckAnimation;
 
+    private Player player;
 
     private GameController(){
+        this.player = new Player();
         this.ducks = new ArrayList<>();
         generateDucks();
         duckAnimation = new DuckAnimation(ducks, this);
@@ -79,5 +78,14 @@ public class GameController {
 
     public int getActualDuckIndex() {
         return actualDuckIndex;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void handleDuckClick(boolean acierto) {
+        player.disparar(acierto);
+        notifyView();
     }
 }
