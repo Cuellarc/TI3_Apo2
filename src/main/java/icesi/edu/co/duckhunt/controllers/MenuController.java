@@ -21,7 +21,6 @@ public class MenuController {
     private Button medium;
     @FXML
     private Button hard;
-
     private GameView gameView;
 
 
@@ -46,21 +45,25 @@ public class MenuController {
 
     @FXML
     public void onDifficultyClick(ActionEvent event){
-        gameView = new GameView();
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Button pressedButton = (Button) event.getSource();
 
         if(pressedButton == easy){
-            Scene scene = new Scene(gameView.getPane(), 600, 400);
+            gameView = new GameView(1);
             stage.setTitle("Duck Hunt - Easy");
-            stage.setScene(scene);
-            stage.show();
         }
         else if (pressedButton == medium) {
-
+            gameView = new GameView(5);
+            stage.setTitle("Duck Hunt - Medium");
         }
         else if (pressedButton == hard) {
-
+            gameView = new GameView(10);
+            stage.setTitle("Duck Hunt - Hard");
         }
+
+        Scene scene = new Scene(gameView.getPane(), 600, 400);
+        stage.setScene(scene);
+        stage.show();
     }
 }

@@ -1,6 +1,8 @@
 package icesi.edu.co.duckhunt.model;
 
 import icesi.edu.co.duckhunt.controllers.GameController;
+import icesi.edu.co.duckhunt.controllers.MenuController;
+import javafx.scene.control.Menu;
 
 import java.util.Random;
 
@@ -14,7 +16,7 @@ public class Duck {
     private int imageIndex;
     private String imagePath;
 
-    public static int speed;
+    private int speed;
     private int x;
     private int y;
     private int directionX;
@@ -26,13 +28,13 @@ public class Duck {
     private GameController controller;
 
 
-    public Duck(int x, int y, String color){
+    public Duck(int x, int y, String color, int speed){
         this.positionX = x;
         this.positionY = y;
         this.imageIndex = 0;
         this.colorExtension = color;
         this.clickable = true;
-        speed = 1;
+        this.speed = speed;
 
         //Inicializacion de la direccion de la imagen.
         this.imagePath = BASE_PATH + colorExtension + "/" + colorExtension + "Right" + (imageIndex + 1) + IMAGE_EXTENSION;
@@ -41,6 +43,7 @@ public class Duck {
 
     //Cambiar la imagen del pato en base a hacia donde se mueve o si esta muerto.
     public void changeImage(){
+        System.out.println("Speed: " + this.speed);
         imageIndex = (imageIndex + 1) % IMAGE_COUNT;
         if(x > 0){
             imagePath = BASE_PATH + colorExtension + "/" + colorExtension + "Right" + (imageIndex + 1) + IMAGE_EXTENSION;
@@ -61,8 +64,8 @@ public class Duck {
         Random random = new Random();
         x = random.nextBoolean() ? 1 : -1; //En X, positivo = derecha, negativo = izquierda.
         y = -1;                            //Y en negativo para que el pato inicie volando hacia arriba.
-        directionX = random.nextInt(speed) + 5;
-        directionY = random.nextInt(speed) + 5;
+        directionX = random.nextInt(speed+1) + 5;
+        directionY = random.nextInt(speed+1) + 5;
     }
 
 

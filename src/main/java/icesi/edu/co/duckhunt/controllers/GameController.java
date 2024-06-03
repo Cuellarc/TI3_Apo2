@@ -14,12 +14,16 @@ public class GameController {
     private static Duck actualDuck;
     private static int actualDuckIndex;
     private DuckAnimation duckAnimation;
+    private int gameSpeed;
 
     private Player player;
 
     private GameController(){
         this.player = new Player();
         this.ducks = new ArrayList<>();
+    }
+
+    public void start(){
         generateDucks();
         duckAnimation = new DuckAnimation(ducks, this);
         duckAnimation.start();
@@ -36,13 +40,13 @@ public class GameController {
     public void generateDucks(){
         Random random = new Random();
 
-        ducks.add(new Duck(random.nextInt(WIDTH), HEIGHT-100, "blackduck"));
+        ducks.add(new Duck(random.nextInt(WIDTH), HEIGHT-100, "blackduck", gameSpeed));
         ducks.get(0).setDirection();
 
-        ducks.add(new Duck(random.nextInt(WIDTH), HEIGHT-100, "blueduck"));
+        ducks.add(new Duck(random.nextInt(WIDTH), HEIGHT-100, "blueduck", gameSpeed));
         ducks.get(1).setDirection();
 
-        ducks.add(new Duck(random.nextInt(WIDTH), HEIGHT-100, "brownduck"));
+        ducks.add(new Duck(random.nextInt(WIDTH), HEIGHT-100, "brownduck", gameSpeed));
         ducks.get(2).setDirection();
 
         setActualDuck();
@@ -87,5 +91,9 @@ public class GameController {
     public void handleDuckClick(boolean acierto) {
         player.disparar(acierto);
         notifyView();
+    }
+
+    public void setGameSpeed(int speed){
+        this.gameSpeed = speed;
     }
 }

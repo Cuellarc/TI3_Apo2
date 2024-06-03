@@ -39,7 +39,9 @@ public class GameView implements UpdateView {
         return controller;
     }
 
-    public GameView() {
+    public GameView(int speed) {
+        controller.setGameSpeed(speed);
+        controller.start();
         initialize();
     }
 
