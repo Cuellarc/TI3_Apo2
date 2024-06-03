@@ -32,6 +32,9 @@ public class GameView implements UpdateView {
 
     private Player player;
 
+    private List<ImageView> lifeImages;
+    private List<ImageView> bulletImages;
+
     public GameController getController() {
         return controller;
     }
@@ -45,6 +48,8 @@ public class GameView implements UpdateView {
         duckImages = new ArrayList<>();
         imageHashMap = new HashMap<>();
         duckImagesPanes = new ArrayList<>();
+        lifeImages = new ArrayList<>();
+        bulletImages = new ArrayList<>();
         List<Duck> ducks = GameController.getDucks();
         pane = new Pane();
         player = new Player();
@@ -70,7 +75,7 @@ public class GameView implements UpdateView {
                 if (duck.isClickable()) {
                     duck.kill();
                     player.disparar(true); // Consumir una bala si acierta
-                    updateBullets(player.getBullets()); // Actualizar la vista del contador de balas
+                    updateBulletsAndLives(player.getBullets(), player.getLives()); // Actualizar la vista del contador de balas y vidas
                 }
             });
             pane.getChildren().add(paneOfDuck);
@@ -86,8 +91,8 @@ public class GameView implements UpdateView {
                 }
             }
             if (!clickOnDuck) {
-                player.disparar(false); // Consumir una bala si falla
-                updateBullets(player.getBullets()); // Actualizar la vista del contador de balas
+                player.disparar(false); // Consumir una bala y una vida si falla
+                updateBulletsAndLives(player.getBullets(), player.getLives()); // Actualizar la vista del contador de balas y vidas
             }
         });
 
@@ -97,25 +102,62 @@ public class GameView implements UpdateView {
         imageView.setFitHeight(400);
         pane.getChildren().add(imageView);
 
-        // Añadir rectángulos para balas, vidas y puntaje.
+        // Añadir rectángulos para vidas y puntaje.
         Rectangle rectangle = new Rectangle(125, 360, 400, 30); // (x, y, width, height)
         rectangle.setFill(Color.BLACK);
         rectangle.setStroke(Color.GREEN);
         rectangle.setStrokeWidth(2);
         pane.getChildren().add(rectangle);
 
+        // Rectángulo para balas.
         Rectangle rectangleBults = new Rectangle(15, 360, 60, 30); // (x, y, width, height)
         rectangleBults.setFill(Color.BLACK);
         rectangleBults.setStroke(Color.GREEN);
         rectangleBults.setStrokeWidth(2);
         pane.getChildren().add(rectangleBults);
 
+        // Añadir vidas.
+        ImageView life1 = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/life/59995589-la-muestra-del-corazón-del-pixel-imagen-del-amor-icono-de-color-blanco-sobre-fondo-negro.jpg").toString()));
+        ImageView life2 = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/life/59995589-la-muestra-del-corazón-del-pixel-imagen-del-amor-icono-de-color-blanco-sobre-fondo-negro.jpg").toString()));
+        ImageView life3 = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/life/59995589-la-muestra-del-corazón-del-pixel-imagen-del-amor-icono-de-color-blanco-sobre-fondo-negro.jpg").toString()));
+
+        life1.setFitWidth(10);
+        life1.setFitHeight(15);
+        life2.setFitWidth(10);
+        life2.setFitHeight(15);
+        life3.setFitWidth(10);
+        life3.setFitHeight(15);
+
+        lifeImages.add(life1);
+        lifeImages.add(life2);
+        lifeImages.add(life3);
+
+        // Posicionar las vidas dentro del rectángulo.
+        double rectXLife = rectangle.localToScene(rectangle.getBoundsInLocal()).getMinX();
+        double rectYLife = rectangle.localToScene(rectangle.getBoundsInLocal()).getMinY();
+
+        double lifeSpacing = 10; // Espacio entre las vidas
+
+        life1.setLayoutX(rectXLife + 10);
+        life1.setLayoutY(rectYLife + (rectangle.getHeight() - life1.getFitHeight()) / 2);
+
+        life2.setLayoutX(life1.getLayoutX() + life1.getFitWidth() + lifeSpacing);
+        life2.setLayoutY(rectYLife + (rectangle.getHeight() - life2.getFitHeight()) / 2);
+
+        life3.setLayoutX(life2.getLayoutX() + life2.getFitWidth() + lifeSpacing);
+        life3.setLayoutY(rectYLife + (rectangle.getHeight() - life3.getFitHeight()) / 2);
+
+        pane.getChildren().add(life1);
+        pane.getChildren().add(life2);
+        pane.getChildren().add(life3);
+
         // Añadir balas.
         ImageView imagBulet1 = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Bulet/WhatsApp Image 2024-05-15 at 09.19.00_cbb595db (1).jpg").toString()));
         ImageView imagBulet2 = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Bulet/WhatsApp Image 2024-05-15 at 09.19.00_cbb595db (1).jpg").toString()));
         ImageView imagBulet3 = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Bulet/WhatsApp Image 2024-05-15 at 09.19.00_cbb595db (1).jpg").toString()));
 
-        // Ajustar dimensiones de las balas
+
+        // Ajustar dimensiones de las balas.
         imagBulet1.setFitWidth(10);
         imagBulet1.setFitHeight(15);
         imagBulet2.setFitWidth(10);
@@ -123,20 +165,24 @@ public class GameView implements UpdateView {
         imagBulet3.setFitWidth(10);
         imagBulet3.setFitHeight(15);
 
-        // Posicionar la primera bala dentro del rectángulo
+        bulletImages.add(imagBulet1);
+        bulletImages.add(imagBulet2);
+        bulletImages.add(imagBulet3);
+
+        // Posicionar la primera bala dentro del rectángulo.
         double rectX = rectangleBults.localToScene(rectangleBults.getBoundsInLocal()).getMinX();
         double rectY = rectangleBults.localToScene(rectangleBults.getBoundsInLocal()).getMinY();
 
         imagBulet1.setLayoutX(rectX + (rectangleBults.getWidth() - imagBulet1.getFitWidth()) / 2);
         imagBulet1.setLayoutY(rectY + (rectangleBults.getHeight() - imagBulet1.getFitHeight()) / 2);
 
-        // Posicionar la segunda bala al lado de la primera bala
-        double spacing = 10; // Espacio entre las balas
+        // Posicionar la segunda bala al lado de la primera bala.
+        double spacing = 10; // Espacio entre las balas.
         imagBulet2.setLayoutX(imagBulet1.getLayoutX() + imagBulet1.getFitWidth() + spacing);
         imagBulet2.setLayoutY(rectY + (rectangleBults.getHeight() - imagBulet2.getFitHeight()) / 2);
 
-        // Posicionar la tercera bala al lado de la primera bala
-        double spacing3 = 10; // Espacio entre las balas
+        // Posicionar la tercera bala al lado de la primera bala.
+        double spacing3 = 10; // Espacio entre las balas.
         imagBulet3.setLayoutX(imagBulet1.getLayoutX() - imagBulet1.getFitWidth() - spacing3);
         imagBulet3.setLayoutY(rectY + (rectangleBults.getHeight() - imagBulet3.getFitHeight()) / 2);
 
@@ -151,14 +197,22 @@ public class GameView implements UpdateView {
         Platform.runLater(this::updateDucks);
     }
 
-    public void updateBullets(int bullets) {
-        // Recorremos las balas y las ocultamos según la cantidad actual de balas restantes
-        for (int i = 0; i < 3; i++) {
-            ImageView bulletImage = (ImageView) pane.getChildren().get(i + 6); // Los índices 6, 7 y 8 corresponden a las imágenes de las balas
+    public void updateBulletsAndLives(int bullets, int lives) {
+        // Recorremos las balas y las ocultamos según la cantidad actual de balas restantes.
+        for (int i = 0; i < bulletImages.size(); i++) {
             if (i < bullets) {
-                bulletImage.setVisible(true); // Mostramos la bala si es una de las balas restantes
+                bulletImages.get(i).setVisible(true); // Mostramos la bala si es una de las balas restantes.
             } else {
-                bulletImage.setVisible(false); // Ocultamos la bala si ya se ha disparado
+                bulletImages.get(i).setVisible(false); // Ocultamos la bala si ya se ha disparado.
+            }
+        }
+
+        // Recorremos las vidas y las ocultamos según la cantidad actual de vidas restantes.
+        for (int i = 0; i < lifeImages.size(); i++) {
+            if (i < lives) {
+                lifeImages.get(i).setVisible(true); // Mostramos la vida si es una de las vidas restantes.
+            } else {
+                lifeImages.get(i).setVisible(false); // Ocultamos la vida si ya se ha perdido.
             }
         }
     }
@@ -187,7 +241,7 @@ public class GameView implements UpdateView {
         duckPane.setLayoutY(duck.getY());
         duckView.setImage(image);
 
-        // Verificar si se hizo clic en un pato
+        // Verificar si se hizo clic en un pato.
         duckPane.setOnMouseClicked(event -> {
             if (duck.isClickable()) {
                 duck.kill();
