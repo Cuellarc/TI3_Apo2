@@ -1,8 +1,6 @@
 package icesi.edu.co.duckhunt.model;
 
 import icesi.edu.co.duckhunt.controllers.GameController;
-import icesi.edu.co.duckhunt.controllers.MenuController;
-import javafx.scene.control.Menu;
 
 import java.util.Random;
 
@@ -68,6 +66,15 @@ public class Duck {
         directionY = random.nextInt(speed+1) + 5;
     }
 
+    // En la clase Duck
+    public void resetPosition() {
+        // Restablecer la posición del pato a la posición inicial
+        this.setX(positionX);
+        this.setY(positionY);
+        this.setDirection(); // Restablecer la dirección del pato
+        this.clickable = true; // Restablecer la capacidad de hacer clic en el pato
+    }
+
 
     //Codigo de movimiento de los patos.
     public void move(){
@@ -94,6 +101,14 @@ public class Duck {
     //Recibir la posicion en Y.
     public int getY() {
         return positionY;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     //Recibir la imagen actual.

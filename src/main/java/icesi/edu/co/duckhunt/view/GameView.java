@@ -5,6 +5,7 @@ import icesi.edu.co.duckhunt.model.Duck;
 import icesi.edu.co.duckhunt.model.Player;
 import icesi.edu.co.duckhunt.model.UpdateView;
 
+import javafx.scene.control.Button;
 import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,11 +20,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
 public class GameView implements UpdateView {
 
     private GameController controller = GameController.getInstance();
     private Pane pane;
+
+    private Button restartButton;
+
+    private ImageView gameOverImageView;
+
     private List<ImageView> duckImages;
     private List<Pane> duckImagesPanes;
     private HashMap<String, Image> imageHashMap;
@@ -34,6 +39,9 @@ public class GameView implements UpdateView {
 
     private List<ImageView> lifeImages;
     private List<ImageView> bulletImages;
+
+    private boolean isGameFinished = false;
+
 
     public GameController getController() {
         return controller;
@@ -98,6 +106,8 @@ public class GameView implements UpdateView {
             }
         });
 
+
+
         // Añadir imagen de fondo y su configuración.
         ImageView imageView = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Background/background.png").toString()));
         imageView.setFitWidth(600);
@@ -158,7 +168,6 @@ public class GameView implements UpdateView {
         ImageView imagBulet2 = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Bulet/WhatsApp Image 2024-05-15 at 09.19.00_cbb595db (1).jpg").toString()));
         ImageView imagBulet3 = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Bulet/WhatsApp Image 2024-05-15 at 09.19.00_cbb595db (1).jpg").toString()));
 
-
         // Ajustar dimensiones de las balas.
         imagBulet1.setFitWidth(10);
         imagBulet1.setFitHeight(15);
@@ -217,7 +226,46 @@ public class GameView implements UpdateView {
                 lifeImages.get(i).setVisible(false); // Ocultamos la vida si ya se ha perdido.
             }
         }
+
+        // Verificar si el jugador ha perdido todas sus vidas
+        if (lives <= 0) {
+            System.out.println("Game Over");
+            resetGame(); // Reiniciar el juego
+        }
     }
+
+    public void resetGame() {
+        // Restablecer la posición de los patos
+        List<Duck> ducks = GameController.getDucks();
+        for (Duck duck : ducks) {
+            duck.resetPosition();
+        }
+
+        // Restablecer las balas y las vidas del jugador
+        player.resetBulletAndLives();
+
+        // Restablecer las imágenes de balas y vidas
+        resetBulletAndLifeImages(); // Nuevo método para restablecer las imágenes
+
+        // Actualizar la vista de las balas y vidas
+        updateBulletsAndLives(player.getBullets(), player.getLives());
+    }
+
+    private void resetBulletAndLifeImages() {
+        // Restablecer la imagen de las balas
+        for (ImageView bulletImage : bulletImages) {
+            bulletImage.setVisible(true);
+        }
+
+        // Restablecer la imagen de las vidas
+        for (ImageView lifeImage : lifeImages) {
+            lifeImage.setVisible(true);
+        }
+    }
+
+
+
+
 
     // Actualizar patos (Activar Runnable).
     public void updateDucks() {
