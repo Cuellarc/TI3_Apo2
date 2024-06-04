@@ -1,5 +1,6 @@
 package icesi.edu.co.duckhunt.view;
 
+import icesi.edu.co.duckhunt.HelloApplication;
 import icesi.edu.co.duckhunt.controllers.GameController;
 import icesi.edu.co.duckhunt.model.Duck;
 import icesi.edu.co.duckhunt.model.Player;
@@ -28,6 +29,7 @@ public class GameView implements UpdateView {
     private Button restartButton;
 
     private ImageView gameOverImageView;
+    private ImageView victoryImageView;
 
     private List<ImageView> duckImages;
     private List<Pane> duckImagesPanes;
@@ -209,15 +211,20 @@ public class GameView implements UpdateView {
 
         // Añadir imagen de victoria y boton de reinicio
         gameOverImageView = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/GameOver/GameOver.jpg").toString()));
+        victoryImageView = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/winImagr/YouWin.jpg").toString()));
+
         restartButton = new Button();
+        restartButton.setOnAction(event -> resetGame());
         restartButton.setText("Restart");
         restartButton.setLayoutX(300);
         restartButton.setLayoutY(200);
 
         gameOverImageView.setVisible(false);
+        victoryImageView.setVisible(false);
         restartButton.setVisible(false);
 
         pane.getChildren().add(gameOverImageView);
+        pane.getChildren().add(victoryImageView);
         pane.getChildren().add(restartButton);
 
         controller.setUpdateView(this::updateDucks);
@@ -278,6 +285,10 @@ public class GameView implements UpdateView {
 
         // Actualizar la vista de las balas y vidas
         updateBulletsAndLives(player.getBullets(), player.getLives());
+
+        gameOverImageView.setVisible(false);
+        victoryImageView.setVisible(false);
+        restartButton.setVisible(false);
     }
 
     private void resetBulletAndLifeImages() {
