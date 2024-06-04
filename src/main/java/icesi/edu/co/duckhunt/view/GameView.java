@@ -207,6 +207,19 @@ public class GameView implements UpdateView {
         pane.getChildren().add(imagBulet2);
         pane.getChildren().add(imagBulet3);
 
+        // Añadir imagen de victoria y boton de reinicio
+        gameOverImageView = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/GameOver/GameOver.jpg").toString()));
+        restartButton = new Button();
+        restartButton.setText("Restart");
+        restartButton.setLayoutX(300);
+        restartButton.setLayoutY(200);
+
+        gameOverImageView.setVisible(false);
+        restartButton.setVisible(false);
+
+        pane.getChildren().add(gameOverImageView);
+        pane.getChildren().add(restartButton);
+
         controller.setUpdateView(this::updateDucks);
     }
 

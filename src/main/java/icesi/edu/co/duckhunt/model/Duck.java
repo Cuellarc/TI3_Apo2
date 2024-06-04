@@ -41,7 +41,6 @@ public class Duck {
 
     //Cambiar la imagen del pato en base a hacia donde se mueve o si esta muerto.
     public void changeImage(){
-        System.out.println("Speed: " + this.speed);
         imageIndex = (imageIndex + 1) % IMAGE_COUNT;
         if(x > 0){
             imagePath = BASE_PATH + colorExtension + "/" + colorExtension + "Right" + (imageIndex + 1) + IMAGE_EXTENSION;
