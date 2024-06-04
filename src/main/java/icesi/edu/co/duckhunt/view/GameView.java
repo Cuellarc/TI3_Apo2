@@ -210,8 +210,12 @@ public class GameView implements UpdateView {
         pane.getChildren().add(imagBulet3);
 
         // Añadir imagen de victoria y boton de reinicio
-        gameOverImageView = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/GameOver/GameOver.jpg").toString()));
-        victoryImageView = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/winImagr/YouWin.jpg").toString()));
+        gameOverImageView = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/GameOver/GameOver_preview_rev_1.png").toString()));
+        victoryImageView = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/winImagr/YouWin_preview_rev_1.png").toString()));
+
+
+        victoryImageView.setLayoutX((pane.getWidth() - victoryImageView.getFitWidth()) / 8);
+        victoryImageView.setLayoutY((pane.getHeight() - victoryImageView.getFitHeight()) / 8);
 
         restartButton = new Button();
         restartButton.setOnAction(event -> resetGame());
@@ -343,8 +347,8 @@ public class GameView implements UpdateView {
     private void checkForVictory() {
         if (!isGameFinished && killDucks >= numPatosToKill) {
             // Mostrar la imagen de victoria y el botón de reinicio si se ha alcanzado el número requerido de patos eliminados
-            gameOverImageView.setVisible(true);
-            restartButton.setVisible(true);
+            victoryImageView.setVisible(true);
+            //restartButton.setVisible(true);
             isGameFinished = true;
         }
     }
