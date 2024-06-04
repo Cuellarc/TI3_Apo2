@@ -37,6 +37,10 @@ public class GameView implements UpdateView {
 
     private Player player;
 
+    private int numPatosToKill;
+
+    private int killDucks=0;
+
     private List<ImageView> lifeImages;
     private List<ImageView> bulletImages;
 
@@ -47,7 +51,8 @@ public class GameView implements UpdateView {
         return controller;
     }
 
-    public GameView(int speed) {
+    public GameView(int speed, int numPatosToKill) {
+        this.numPatosToKill = numPatosToKill;
         controller.setGameSpeed(speed);
         controller.start();
         initialize();
@@ -168,6 +173,7 @@ public class GameView implements UpdateView {
         ImageView imagBulet2 = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Bulet/WhatsApp Image 2024-05-15 at 09.19.00_cbb595db (1).jpg").toString()));
         ImageView imagBulet3 = new ImageView(new Image(GameView.class.getResource("/icesi/edu/co/duckhunt/images/Bulet/WhatsApp Image 2024-05-15 at 09.19.00_cbb595db (1).jpg").toString()));
 
+
         // Ajustar dimensiones de las balas.
         imagBulet1.setFitWidth(10);
         imagBulet1.setFitHeight(15);
@@ -204,6 +210,7 @@ public class GameView implements UpdateView {
         controller.setUpdateView(this::updateDucks);
     }
 
+    @Override
     public void update() {
         Platform.runLater(this::updateDucks);
     }
@@ -231,6 +238,15 @@ public class GameView implements UpdateView {
         if (lives <= 0) {
             System.out.println("Game Over");
             resetGame(); // Reiniciar el juego
+        }
+    }
+
+    // Método para manejar la muerte de un pato
+    private void handleDuckKill() {
+        if (!isGameFinished) {
+            killDucks++;
+            // Verificar si se ha alcanzado la victoria
+            checkForVictory();
         }
     }
 
@@ -263,10 +279,6 @@ public class GameView implements UpdateView {
         }
     }
 
-
-
-
-
     // Actualizar patos (Activar Runnable).
     public void updateDucks() {
         List<Duck> ducks = GameController.getDucks();
@@ -295,8 +307,22 @@ public class GameView implements UpdateView {
         duckPane.setOnMouseClicked(event -> {
             if (duck.isClickable()) {
                 duck.kill();
+                handleDuckKill(); // Llama al método para manejar la eliminación del pato
+                update(); // Llama a update después de cada clic en el pato para verificar la condición de victoria
             }
         });
+
+        checkForVictory(); // Llama a checkForVictory después de actualizar los patos
+    }
+
+    // Método para verificar si se ha alcanzado la victoria
+    private void checkForVictory() {
+        if (!isGameFinished && killDucks >= numPatosToKill) {
+            // Mostrar la imagen de victoria y el botón de reinicio si se ha alcanzado el número requerido de patos eliminados
+            gameOverImageView.setVisible(true);
+            restartButton.setVisible(true);
+            isGameFinished = true;
+        }
     }
 
     public Pane getPane() {

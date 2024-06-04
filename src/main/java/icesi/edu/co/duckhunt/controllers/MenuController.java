@@ -23,42 +23,37 @@ public class MenuController {
     private Button hard;
     private GameView gameView;
 
-
-
     @FXML
-    public void onStartClick(ActionEvent event){
+    public void onStartClick(ActionEvent event) {
         FXMLLoader fxmlLoader = new FXMLLoader(MenuController.class.getResource("/icesi/edu/co/duckhunt/view/difficulty-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         try {
             Parent root = fxmlLoader.load();
             stage.setScene(new Scene(root));
             stage.show();
-        } catch (IOException e){
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     @FXML
-    public void onExitClick(){
+    public void onExitClick() {
         System.exit(0);
     }
 
     @FXML
-    public void onDifficultyClick(ActionEvent event){
-
+    public void onDifficultyClick(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Button pressedButton = (Button) event.getSource();
 
-        if(pressedButton == easy){
-            gameView = new GameView(1);
+        if (pressedButton == easy) {
+            gameView = new GameView(1, 5);
             stage.setTitle("Duck Hunt - Easy");
-        }
-        else if (pressedButton == medium) {
-            gameView = new GameView(5);
+        } else if (pressedButton == medium) {
+            gameView = new GameView(5,10);
             stage.setTitle("Duck Hunt - Medium");
-        }
-        else if (pressedButton == hard) {
-            gameView = new GameView(10);
+        } else if (pressedButton == hard) {
+            gameView = new GameView(10, 15);
             stage.setTitle("Duck Hunt - Hard");
         }
 
